@@ -1,0 +1,36 @@
+2024-08-29 09:00:12 INFO  Starting backup process for server01.
+
+2024-08-29 09:05:34 WARN  Disk space running low on /dev/sda1.
+
+2024-08-29 09:07:18 ERROR Failed to back up database db01.
+
+2024-08-29 09:10:55 INFO  Backup process completed for server01.
+
+2024-08-29 09:12:03 INFO  Starting backup process for server02.
+
+2024-08-29 09:14:27 ERROR Failed to back up database db02.
+
+2024-08-29 09:17:42 INFO  Backup process completed for server02.
+
+2024-08-29 09:20:33 WARN  Disk space running low on /dev/sda2.
+
+2024-08-29 09:22:47 INFO  Starting backup process for server03.
+
+2024-08-29 09:24:59 ERROR Failed to back up database db03.
+
+2024-08-29 09:28:16 INFO  Backup process completed for server03.
+
+2024-08-29 09:30:21 INFO  Starting backup process for server04.
+
+2024-08-29 09:32:40 ERROR Failed to back up database db04.
+
+2024-08-29 09:35:52 INFO  Backup process completed for server04.
+
+2024-08-29 09:40:00 WARN  Disk space running low on /dev/sda3.
+
+2024-08-29 09:45:14 INFO  Starting backup process for server05.
+
+2024-08-29 09:47:36 ERROR Failed to back up database db05.
+
+2024-08-29 09:50:00 INFO  Backup process completed for server05.
+
