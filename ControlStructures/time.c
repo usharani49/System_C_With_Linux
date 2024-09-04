@@ -7,8 +7,8 @@ int main()
 	printf("Enter time in minutes:\n");
 	scanf("%d",&min);
 
-	int tothrs = min /60; 
-	int minutes = min % 60;
+	int tothrs = min /MIN; 
+	int minutes = min % MIN;
 
 	printf("%d minutes is %d hours and %d minutes\n",min,tothrs,minutes);
 
