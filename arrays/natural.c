@@ -4,7 +4,10 @@
 #define MAX 10
 int main()
 {
-	int a[MAX]={1,2,3,4,5,6,7,8,9,10};
+	int a[10];
+	for(int i=0;i<MAX;i++){
+		a[i]=i+1;
+	}
 	printf("Natural numbers are:\n");
 	for(int i=0;i<MAX;i++){
 		printf("%d ",a[i]);
