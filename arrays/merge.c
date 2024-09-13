@@ -27,9 +27,9 @@ int main()
 		 c[i]=a[i];
 	}
 
-	for(int i=MAX;i<MAX+MAX;i++)
+	for(int i=0;i<MAX;i++)
 	{
-		c[i]=b[i-MAX];
+		c[MAX+i]=b[i];
 	}
 
 	printf("Merged array :\n");
