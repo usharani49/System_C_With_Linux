@@ -1,77 +1,109 @@
-#include <stdio.h>
-#include <string.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX 100
 
-#define MAX_LINES 100
-#define MAX_LINE_LENGTH 100
-#define MAX_WORD_LENGTH 50
-
-void searchInLine(const char* line, char searchChar, const char* searchWord) {
-    int i, posCharSum = 0, posWordSum = 0;
-    int lineLength = strlen(line);
-    int wordLength = strlen(searchWord);
-
-    
-    printf("Searching for character '%c' in line: \"%s\"\n", searchChar, line);
-    for (i = 0; i < lineLength; i++) {
-        if (line[i] == searchChar) {
-            printf("Character '%c' found at position: %d\n", searchChar, i + 1);
-            posCharSum += (i + 1);
-        }
-    }
-
-    printf("Searching for word \"%s\" in line: \"%s\"\n", searchWord, line);
-    for (i = 0; i <= lineLength - wordLength; i++) {
-        if (strncmp(&line[i], searchWord, wordLength) == 0) {
-            printf("Word \"%s\" found starting at position: %d\n", searchWord, i + 1);
-            posWordSum += (i + 1);
-        }
-    }
-
+int findCharPos(char *str,char ch)
+{
+  int c=0;
+  int i=0;
+  int sumPos=0;
   
-    if (posCharSum > 0) {
-        printf("Sum of positions of character '%c': %d\n", searchChar, posCharSum);
-    } else {
-        printf("Character '%c' not found in line.\n", searchChar);
+  printf("Character %c found at positions: ",ch);
+  
+  while(str[i]!='\0')
+  {
+    if(str[i]==ch)
+    {
+      printf("%d ",i);
+      sumPos+=i;
+      c++;
     }
+    i++;
+  }
+  if(c==0)
+  {
+    printf("not found\n");
+  } 
+  printf("\n");
+  return sumPos;
+}
+
+
+int findWordPos(char *str,char *word)
+{
+  int sumPos=0;
+  int c=0;
+  char *pos=str;
+  
+  printf("Word %s found at positions: ",word);
+  
+  while((pos=strstr(pos,word))!=NULL)
+  {
+    int p=(int)(pos-str);
+    printf("%d ",p);
+    sumPos+=p;
+    c++;
+    pos+=strlen(word);
+  }
+  
+  if(c==0)
+  {
+    printf("not found");
+  }
+  
+  printf("\n");
+  return sumPos;
+}
+
+
+int main()
+{
+  int n;
+  printf("Enter number of lines:\n");
+  scanf("%d",&n);
+  getchar();
+  
+  char str[n][MAX];
+  
+  printf("Enter %d of lines",n);
+  for(int i=0;i<n;i++)
+  {
+    fgets(str[i],MAX,stdin);
+    str[i][strcspn(str[i],"\n")]='\0';
+  }
+  
+  char ch;
+  printf("\nEnter a character:\n");
+  scanf("%c",&ch);
+  getchar();
+  
+  char word[MAX];
+  printf("Enter a word:\n");
+  scanf("%s",&word);
+  getchar();
+  
+  printf("===============RESULTS=================\n");
+  printf("The %d strings are\n",n);
+  for(int i=0;i<n;i++)
+  {
+    printf("%s\n",str[i]);
+  }
+  
+  printf("The character is %c\n",ch);
+  
+  printf("The word is %s\n",word);
+  
+  for(int i=0;i<n;i++)
+  {
+    printf("\nIn string %d: %s\n",i+1,str[i]);
     
-    if (posWordSum > 0) {
-        printf("Sum of positions of word \"%s\": %d\n", searchWord, posWordSum);
-    } else {
-        printf("Word \"%s\" not found in line.\n", searchWord);
-    }
+    int charSum=findCharPos(str[i],ch);
+    printf("Sum of characters %c positions: %d\n",ch,charSum);
+    
+    int wordSum=findWordPos(str[i],word);
+    printf("Sum of words %s positions: %d\n",word,wordSum);
+  }
+  
+  return EXIT_SUCCESS;
 }
-
-int main() {
-    int n, i;
-    char lines[MAX_LINES][MAX_LINE_LENGTH];
-    char searchChar;
-    char searchWord[MAX_WORD_LENGTH];
-
-    printf("Enter the number of lines: ");
-    scanf("%d", &n);
-    getchar(); 
-
-    printf("Enter %d lines of input:\n", n);
-    for (i = 0; i < n; i++) {
-        printf("Line %d: ", i + 1);
-        fgets(lines[i], sizeof(lines[i]), stdin);
-        lines[i][strcspn(lines[i], "\n")] = '\0';
-    }
-
-    printf("\nEnter the character to search: ");
-    scanf(" %c", &searchChar);
-    getchar(); 
-
-    printf("\nEnter the word to search: ");
-    fgets(searchWord, sizeof(searchWord), stdin);
-
-    searchWord[strcspn(searchWord, "\n")] = '\0';
-
-    for (i = 0; i < n; i++) {
-        searchInLine(lines[i], searchChar, searchWord);
-        printf("\n");
-    }
-
-    return 0;
-}
-
