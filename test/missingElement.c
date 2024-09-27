@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #define MAX 10
 
-int sort(int[]);
-int missing(int[]);
+void sort(int[]);
+void missing(int[]);
 
 int main() {
     int a[MAX];
@@ -16,10 +16,11 @@ int main() {
     
     sort(a);
     missing(a);
+
     return EXIT_SUCCESS;
 }
 
-int sort(int a[])
+void sort(int a[])
 {
     int i;
     int j;
@@ -38,23 +39,26 @@ int sort(int a[])
         } 
     }
     
-    printf("Sorted Array:\n");
-    for(i=0;i<MAX;i++)
-    {
-        printf("%d ",a[i]);
-    }
 } 
 
-int missing(int a[])
+void missing(int a[])
 {
     int i;
     
+	printf("Missing Element:\n");
+
     for(i=0;i<MAX;i++)
     {
-        if(a[i]!=i+1)
-        {
-            printf("\nMissing element: %d",i+1);
-        }
+		if(a[i+1]-a[i]!=1)
+		{
+			int m=a[i]+1;
+			while(m<a[i+1])
+			{
+				printf("%d ",m);
+				m++;
+			}
+		}
     }
+	printf("\n");
 }
-
+ 

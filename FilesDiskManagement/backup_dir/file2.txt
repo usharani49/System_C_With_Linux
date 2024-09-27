@@ -1,2 +1,0 @@
-I am file2 with content
-my parent directory is FilesDiskManagement

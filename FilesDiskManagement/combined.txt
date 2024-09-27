@@ -1,4 +1,0 @@
-I am a file1 with content 
-my parent directory is FilesDiskManagement
-I am file2 with content
-my parent directory is FilesDiskManagement
