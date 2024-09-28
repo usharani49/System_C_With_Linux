@@ -1,53 +1,35 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-void removeConsecutiveDuplicates(char* str) {
-    int n = strlen(str);
-    if (n <= 1) return;
+void removeConsecutiveDuplicates(char str[]) {
+    int len = strlen(str);
+    int i, j;
+    int foundDuplicate = 1;
 
-    char result[n + 1];  // Temporary result string
-    bool duplicatesFound;
-
-    do {
-        duplicatesFound = false;
-        int j = 0;  // Index for the result array
-
-        for (int i = 0; i < n; i++) {
-            // Check if current character and the next character are the same
-            if (i < n - 1 && str[i] == str[i + 1]) {
-                duplicatesFound = true;
-                // Skip over all consecutive duplicate characters
-                while (i < n - 1 && str[i] == str[i + 1]) {
-                    i++;
+    // Repeat the process until no consecutive duplicates are found
+    while (foundDuplicate) {
+        foundDuplicate = 0; // Reset flag
+        for (i = 0; i < len - 1; i++) {
+            if (str[i] == str[i + 1]) {
+                foundDuplicate = 1; // Mark that we found a duplicate
+                // Remove the consecutive duplicates
+                for (j = i; j < len - 2; j++) {
+                    str[j] = str[j + 2];
                 }
-            } else {
-                // Copy the non-duplicate character to the result
-                result[j++] = str[i];
+                str[len - 2] = '\0'; // Shrink the string
+                str[len - 1] = '\0';
+                len -= 2; // Adjust the length of the string
+                break; // Start again from the beginning
             }
         }
-        
-        result[j] = '\0';  // Null-terminate the result string
-        strcpy(str, result);  // Update the original string with the result
-        n = strlen(str);  // Update the length of the string
-
-    } while (duplicatesFound);
+    }
 }
 
 int main() {
-    char str[100];
-
-    printf("Enter a string: ");
-    scanf("%s", str);
-
+    char str[] = "abbaccd";
+    printf("Original string: %s\n", str);
     removeConsecutiveDuplicates(str);
-
-    if (strlen(str) == 0) {
-        printf("Final string: Empty\n");
-    } else {
-        printf("Final string: %s\n", str);
-    }
-
+    printf("Final string: %s\n", str);
     return 0;
 }
 
