@@ -1,68 +1,67 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdbool.h>
+#define MAX 100
 
-#define MAX_WORDS 100
-#define MAX_LEN 100
-
-// Function to sort characters of a string
-void sortString(char *str) {
-    int len = strlen(str);
-    for (int i = 0; i < len - 1; i++) {
-        for (int j = i + 1; j < len; j++) {
-            if (str[i] > str[j]) {
-                char temp = str[i];
-                str[i] = str[j];
-                str[j] = temp;
-            }
+void sortString(char *str)
+{
+    int l=strlen(str);
+    for(int i=0;i<l;i++)
+        {
+            for(int j=i+1;j<l;j++)
+                {
+                    if(str[i]>str[j])
+                    {
+                        char temp=str[i];
+                        str[i]=str[j];
+                        str[j]=temp;
+                    }
+                }
         }
-    }
 }
 
-// Function to check if all words are anagrams
-bool areAllWordsAnagrams(char words[][MAX_LEN], int count) {
-    char sortedWords[count][MAX_LEN];
+bool areAllAnargrams(char *str)
+{
+    char *tok=strtok(str,",");
+    char sortedWord[MAX];
 
-    // Sort characters of each word
-    for (int i = 0; i < count; i++) {
-        strcpy(sortedWords[i], words[i]);
-        sortString(sortedWords[i]);
+    if(tok==NULL)
+    {
+        return false;
     }
+    strcpy(sortedWord,tok);
+    sortString(sortedWord);
 
-    // Compare sorted versions of all words
-    for (int i = 1; i < count; i++) {
-        if (strcmp(sortedWords[i], sortedWords[0]) != 0) {
-            return false;
+    while((tok=strtok(NULL,","))!=NULL)
+        {
+            char temp[MAX];
+            strcpy(temp,tok);
+            sortString(temp);
+
+            if(strcmp(temp,sortedWord)!=0)
+            {
+                return false;
+            }
         }
-    }
     return true;
 }
 
-int main() {
-    char input[MAX_LEN * MAX_WORDS];
-    char words[MAX_WORDS][MAX_LEN];
-    int count = 0;
+int main()
+{
+    char input[MAX];
 
-    printf("Enter comma-separated words: ");
-    fgets(input, sizeof(input), stdin);
-    input[strcspn(input, "\n")] = '\0'; // Remove newline character
-
-    // Split input into words based on commas
-    char *token = strtok(input, ",");
-    while (token != NULL) {
-        strcpy(words[count++], token);
-        token = strtok(NULL, ",");
+    printf("Enter comma separated  elements in a string:\n");
+    fgets(input,MAX,stdin);
+    input[strcspn(input,"\n")]='\0';
+    
+    if(areAllAnargrams(input))
+    {
+        printf("true");
     }
-
-    // Check if all words are anagrams
-    if (areAllWordsAnagrams(words, count)) {
-        printf("True\n");
-    } else {
-        printf("False\n");
+    else
+    {
+        printf("false");
     }
-
-    return 0;
+    return EXIT_SUCCESS;
 }
-
-

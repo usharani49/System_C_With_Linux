@@ -1,54 +1,51 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
+#include <ctype.h>
+#define MAX 100
 
 // Function to check if a character is a vowel
-bool isVowel(char ch) {
-    char vowels[] = "aeiouAEIOU"; // Case insensitive vowels
-    for (int i = 0; i < 10; i++) {
-        if (ch == vowels[i]) {
-            return true;
-        }
-    }
-    return false;
+int isVowel(char ch) {
+    ch = tolower(ch); // Convert to lowercase to handle both cases
+    return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
 }
 
-// Function to remove consecutive vowel pairs and count deletions
-int removeVowelPairs(char* str) {
-    int n = strlen(str);
-    int deletionCount = 0;  // To count the number of deletions
-    char result[n + 1];     // Temporary result string
-    
-    int j = 0;  // Index for the result array
-    
-    for (int i = 0; i < n; i++) {
-        // Check if current character and next character form a vowel pair
-        if (i < n - 1 && isVowel(str[i]) && isVowel(str[i + 1])) {
-            deletionCount++;  // Increment deletion count
-            i++;  // Skip the next character (forming a pair)
-        } else {
-            // Copy the non-vowel-pair character to the result
-            result[j++] = str[i];
+int removeConsecutiveVowelPairs(char str[]) {
+    int len = strlen(str);
+    int i, j;
+    int foundVowelPair = 1;
+    int deletions = 0; // Counter for number of deletions
+
+    // Repeat the process until no consecutive vowel pairs are found
+    while (foundVowelPair) {
+        foundVowelPair = 0; // Reset flag
+        for (i = 0; i < len - 1; i++) {
+            if (isVowel(str[i]) && isVowel(str[i + 1])) {
+                foundVowelPair = 1; // Mark that we found a vowel pair
+                deletions++; // Increment the deletion counter
+
+                // Remove the consecutive vowels
+                for (j = i; j < len - 2; j++) {
+                    str[j] = str[j + 2];
+                }
+                str[len - 2] = '\0'; // Shrink the string
+                str[len - 1] = '\0';
+                len -= 2; // Adjust the length of the string
+                break; // Start again from the beginning
+            }
         }
     }
-    
-    result[j] = '\0';  // Null-terminate the result string
-    strcpy(str, result);  // Copy the result back to the original string
-    
-    return deletionCount;  // Return the number of deletions
+
+    return deletions; // Return the total number of deletions
 }
 
 int main() {
-    char str[100];
+    char str[MAX];
+    fgets(str,MAX,stdin);
+    str[strcspn(str,"\n")]='\0';
+    // Call the function and get the number of deletions
+    int deletionCount = removeConsecutiveVowelPairs(str);
 
-    printf("Enter a string: ");
-    scanf("%s", str);
-
-    int deletions = removeVowelPairs(str);
-
-    printf("Modified string: %s\n", str);
-    printf("Number of deletions: %d\n", deletions);
-
+    printf("Total deletions of consecutive vowels: %d\n", deletionCount);
     return 0;
 }
 
